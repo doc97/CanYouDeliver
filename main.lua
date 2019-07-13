@@ -18,6 +18,11 @@ function love.load()
   global.titleFont = love.graphics.newFont("assets/fonts/RobotoMono-Regular.ttf", 64)
   global.font = love.graphics.newFont("assets/fonts/RobotoMono-Regular.ttf", 36)
   
+  -- Load music
+  global.bgm = love.audio.newSource("assets/music/TheDeadVineyard.mp3", "stream")
+  global.bgm:setLooping(true)
+  global.bgm:play()
+  
   global.defaultColor = { 120 / 255, 120 / 255, 120 / 255 }
   
   -- Setup window
