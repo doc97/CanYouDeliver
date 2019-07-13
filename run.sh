@@ -1,4 +1,4 @@
 #!/bin/sh
 
 [ "${1}" = "build" ] && ./build.sh
-love/love.exe build/output/
+love/love build/output/

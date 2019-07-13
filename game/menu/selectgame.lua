@@ -13,6 +13,7 @@ function M:new()
   -- setup menu entries
   local event = event
   o.menu:newEntry("Number Memory", function() event:fire("selectgame.game", { name = "memnumgame" }) end)
+  o.menu:newEntry("Color Recognition", function() event:fire("selectgame.game", { name = "colorsgame" }) end)
   o.menu:newEntry("Exit", function() event:fire("selectgame.exit") end)
   o.menu:set(1)
   

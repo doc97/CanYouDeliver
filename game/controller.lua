@@ -5,7 +5,8 @@ local menuSelectGame = require "game.menu.selectgame"
 
 local M = { func = {} }
 local minigames = {
-  memnumgame = require "game.mini.memnumgame"
+  memnumgame = require "game.mini.memnumgame",
+  colorsgame = require "game.mini.colorsgame",
 }
 
 function M.func.main(subType, data, state)
