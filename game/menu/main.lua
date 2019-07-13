@@ -17,7 +17,7 @@ function M:new()
   
   -- setup gui properties
   o.winWidth, o.winHeight = love.window.getMode()
-  o.gui:setPos(o.winWidth / 2, o.winHeight / 2 + 100)
+  o.gui:setPos(o.winWidth / 2, o.winHeight / 2)
   o.gui:setSize(global.font:getWidth("[ ] New Game"), global.font:getHeight())
   o.gui:setAlign("center", "top")
   

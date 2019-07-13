@@ -1,14 +1,16 @@
 local menuSelectGame = require "game.menu.selectgame"
+local menuContinue = require "game.menu.continue"
 local Menu = require "lib.menu"
 local M = {}
 
-function M:new()
+function M:new(data)
+  data = data or { num = 0, points = 0 }
   local o = {}
   setmetatable(o, self)
   self.__index = self
   
   o.winWidth, o.winHeight = love.window.getMode()
-  o.number = math.random(9)
+  o.number = math.random(10 ^ (data.num), 10 ^ (data.num + 1) - 1)
   o.numberX = (o.winWidth - global.titleFont:getWidth(o.number)) / 2
   o.numberY = (o.winHeight - global.titleFont:getHeight()) / 2
   
@@ -21,23 +23,9 @@ function M:new()
   o.questionY = (o.winHeight - global.titleFont:getHeight()) / 2 - 25
   
   o.answer = ""
+  o.points = data.points
   
-  local base = Menu:new()
-  o.betQuestion = "Do you want to continue?"
-  o.betMenu = {}
-  setmetatable(o.betMenu, base)
-  base.__index = base
-  
-  local event = event
-  o.betMenu.menu:newEntry("Yes", function() event:fire("minigame.yes") end)
-  o.betMenu.menu:newEntry("No", function() event:fire("minigame.no") end)
-  o.betMenu.menu:set(1)
-  
-  o.betMenu.gui:setPos(o.winWidth /2, o.winHeight / 2 + 50)
-  o.betMenu.gui:setSize(global.font:getWidth("[ ] Yes"), global.font:getHeight())
-  o.betMenu.gui:setAlign("center", "center")
-  
-  -- States: show, ask, bet
+  -- States: show, ask
   o.state = "show"
   
   return o
@@ -53,10 +41,6 @@ function M:draw(g)
     g.setFont(global.titleFont)
     g.print(self.question, self.questionX, self.questionY)
     g.printf(self.answer .. "_", 0, self.winHeight / 2 + 25, self.winWidth, "center")
-  elseif self.state == "bet" then
-    g.setFont(global.font)
-    g.printf(self.betQuestion, 0, self.winHeight / 2 - 100, self.winWidth, "center")
-    self.betMenu.gui:draw(g)
   end
 end
 
@@ -78,8 +62,9 @@ function M:keypressed(key, scancode, isrepeat)
     elseif key == "return" then
       local num = tonumber(self.answer)
       if num == self.number then
-        self.state = "bet"
+        state.view = menuContinue:new({ game = "memnumgame", data = { num = self.answer:len(), points = self.points + 100 } })
       else
+        state.points = self.points + self.points
         state.view = menuSelectGame:new()
       end
     end
@@ -95,24 +80,6 @@ function M:textinput(char)
       self.answer = self.answer .. char
     end
   end
-end
-
-function M:handleEvent(subType, data, state)
-  if self.state == "bet" then
-    if subType == "yes" then
-      self.state = "show"
-      self.number = math.random(10 ^ (self.answer:len()), 10 ^ (self.answer:len() + 1) - 1)
-      self.numberX = (self.winWidth - global.titleFont:getWidth(self.number)) / 2
-      self.answer = ""
-      self.lineX2 = self.winWidth / 2 + 50
-    elseif subType == "no" then
-      state.view = menuSelectGame:new()
-    else
-      return false
-    end
-    return true
-  end
-  return false
 end
 
 memnumgame = M

@@ -1,3 +1,4 @@
+local state = require "game.state"
 local Menu = require "lib.menu"
 local M = {}
 
@@ -16,22 +17,23 @@ function M:new()
   o.menu:set(1)
   
   -- setup gui properties
-  local winWidth, winHeight = love.window.getMode()
-  o.gui:setPos(winWidth / 2, winHeight / 2 + 50)
+  o.winWidth, o.winHeight = love.window.getMode()
+  o.gui:setPos(o.winWidth / 2, o.winHeight / 2 + 50)
   o.gui:setSize(global.font:getWidth("[ ] Number Memory"), global.font:getHeight())
   o.gui:setAlign("center", "center")
   
   o.title = "Select mini-game"
   o.titleWidth = global.titleFont:getWidth(o.title)
-  o.titleX = winWidth / 2 - o.titleWidth / 2
+  o.titleX = o.winWidth / 2 - o.titleWidth / 2
   
   return o
 end
 
 function M:draw(g)
   g.setFont(global.titleFont)
-  g.print(self.title, self.titleX, 200)
+  g.printf(self.title, 0, 150, self.winWidth, "center")
   g.setFont(global.font)
+  g.printf("Total points: " .. state.points, 0, 250, self.winWidth, "center")
   self.gui:draw(g)
 end
 

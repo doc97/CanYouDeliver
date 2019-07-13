@@ -42,6 +42,18 @@ function M.func.selectgame(subType, data, state)
   return true
 end
 
+function M.func.continue(subType, data, state)
+  if subType == "yes" then
+    state.view = minigames[data.game]:new(data.data)
+  elseif subType == "no" then
+    state.points = state.points + data.points
+    state.view = menuSelectGame:new()
+  else
+    return false
+  end
+  return true
+end
+
 function M.func.minigame(subType, data, state)
   if not state.view:handleEvent(subType, data, state) then
     error(("Error processing minigame event %q"):format(subType))
