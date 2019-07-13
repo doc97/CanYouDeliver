@@ -28,6 +28,8 @@ function love.load()
 end
 
 function love.draw()
+  love.graphics.clear(253 / 255, 246 / 255, 228 / 255)
+  love.graphics.setColor(150 / 255, 150 / 255, 150 / 255)
   state.view:draw(love.graphics)
 end
 
