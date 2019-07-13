@@ -45,6 +45,14 @@ function M.func.minigame(subType, data, state)
   return true
 end
 
+function M.func.score(subType, data, state)
+  if subType == "continue" then
+    state.view = menuMain:new()
+    return true
+  end
+  return false
+end
+
 function M.handleEvent(e, data)
   local mainType, subType = e:match("(%a+)%.(%a+)")
   local handler = M.func[mainType]

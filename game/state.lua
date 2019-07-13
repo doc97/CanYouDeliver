@@ -1,5 +1,6 @@
 local menuNextGame = require "game.menu.nextgame"
 local menuContinue = require "game.menu.continue"
+local menuScore = require "game.menu.score"
 local menuMain = require "game.menu.main"
 
 local M = { view = {}, points = 0, collectedPoints = 0, nextGameIdx = 0,
@@ -27,7 +28,7 @@ function M:nextGame()
     local name = M.games[code].name
     self.view = menuNextGame:new({ nextCode = code, nextName = name })
   else
-    self.view = menuMain:new()
+    self.view = menuScore:new({ points = self.points })
   end
 end
 
