@@ -11,7 +11,7 @@ local M = {
     grey = { 105/255, 105/255, 105/255 }
   },
   colorNames = { "red", "green", "blue", "orange", "purple", "yellow", "grey" },
-  keys = { "h", "j", "k", "l" },
+  keys = { "a", "s", "d", "f" },
 }
 
 function M:new(data)
@@ -88,7 +88,7 @@ function M:draw(g)
 end
 
 function M:update(dt)
-  self.lineX2 = math.max(self.lineX1, self.lineX2 - (50 * dt))
+  self.lineX2 = math.max(self.lineX1, self.lineX2 - (90 * dt))
   if self.lineX2 == self.lineX1 then
     state:nextGame()
   end
