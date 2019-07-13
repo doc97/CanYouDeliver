@@ -64,7 +64,7 @@ function M:keypressed(key, scancode, isrepeat)
       if num == self.number then
         state.view = menuContinue:new({ game = "memnumgame", data = { num = self.answer:len(), points = self.points + 100 } })
       else
-        state.points = self.points + self.points
+        state.points = state.points + self.points
         state.view = menuSelectGame:new()
       end
     end
