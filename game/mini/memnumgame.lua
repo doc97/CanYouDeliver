@@ -33,7 +33,7 @@ function M:new()
   o.betMenu.menu:newEntry("No", function() event:fire("minigame.no") end)
   o.betMenu.menu:set(1)
   
-  o.betMenu.gui:setPos(o.winWidth /2, o.winHeight / 2)
+  o.betMenu.gui:setPos(o.winWidth /2, o.winHeight / 2 + 50)
   o.betMenu.gui:setSize(global.font:getWidth("[ ] Yes"), global.font:getHeight())
   o.betMenu.gui:setAlign("center", "center")
   
@@ -55,6 +55,7 @@ function M:draw(g)
     g.printf(self.answer .. "_", 0, self.winHeight / 2 + 25, self.winWidth, "center")
   elseif self.state == "bet" then
     g.setFont(global.font)
+    g.printf(self.betQuestion, 0, self.winHeight / 2 - 100, self.winWidth, "center")
     self.betMenu.gui:draw(g)
   end
 end
@@ -79,7 +80,7 @@ function M:keypressed(key, scancode, isrepeat)
       if num == self.number then
         self.state = "bet"
       else
-        self.view = menuSelectGame:new()
+        state.view = menuSelectGame:new()
       end
     end
   elseif self.state == "bet" then
