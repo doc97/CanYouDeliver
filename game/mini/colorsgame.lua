@@ -1,5 +1,6 @@
 local menuSelectGame = require "game.menu.selectgame"
 local Menu = require "lib.menu"
+local menuContinue = require "game.menu.continue"
 local M = {
   colors = {
     red = { 1, 0, 0 },
@@ -14,14 +15,16 @@ local M = {
   keys = { "h", "j", "k", "l" },
 }
 
-function M:new()
+function M:new(data)
+  data = data or {points = 0}
   local base = Menu:new()
   local o = {}
   setmetatable(o, self)
   setmetatable(self, base)
   self.__index = self
   base.__index = base
- 
+
+  o.points = data.points
   -- Flash the color | SHOW
   local winningTextColorIndex = math.random(#M.colorNames)
   o.winningText = M.colorNames[winningTextColorIndex]
@@ -85,8 +88,11 @@ end
 function M:keypressed(key, scancode, isrepeat)
   if key == M.keys[self.correctKeyIndex] then
     print "Success!"
+    --  TODO Add data is smth + points xd
+    state.view = menuContinue:new({ game = "colorsgame",data = { points = self.points + 100} })
   else
     print "FAIL!"
+    state.view = menuSelectGame:new()
   end
 end
 
