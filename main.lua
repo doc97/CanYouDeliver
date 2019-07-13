@@ -2,6 +2,7 @@ local event = require "lib.event"
 local state = require "game.state"
 local controller = require "game.controller"
 local menuMain = require "game.menu.main"
+local circleGfx = require "game.gfx.circles"
 
 global = {}
 
@@ -24,6 +25,10 @@ function love.load()
   
   -- Register event handler
   event:subscribe(controller.handleEvent)
+  
+  for i = 1, 1000 do
+    circleGfx:update(0.05)
+  end
   
   -- Initialize state
   state.view = menuMain:new()

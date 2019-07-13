@@ -1,3 +1,4 @@
+local circleGfx = require "game.gfx.circles"
 local Menu = require "lib.menu"
 local M = {}
 
@@ -28,14 +29,19 @@ function M:new(data)
 end
 
 function M:draw(g)
+  circleGfx:draw(g)
+  
   g.setFont(global.titleFont)
+  g.setColor(global.defaultColor)
   g.printf(self.title, 0, 250, self.winWidth, "center")
   g.setFont(global.font)
   g.printf("Total points: " .. state.points, 0, 350, self.winWidth, "center")
   self.gui:draw(g)
 end
 
-function M:update(dt) end
+function M:update(dt)
+  circleGfx:update(dt)
+end
 
 selectgame = M
 return selectgame

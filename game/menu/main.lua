@@ -1,3 +1,4 @@
+local circleGfx = require "game.gfx.circles"
 local Menu = require "lib.menu"
 local M = {}
 
@@ -25,16 +26,11 @@ function M:new()
   o.titleWidth = global.titleFont:getWidth(o.title)
   o.titleX = o.winWidth / 2 - o.titleWidth / 2
   
-  o.circles = {}
-  
   return o
 end
 
 function M:draw(g)
-  for _, circle in ipairs(self.circles) do
-    g.setColor(circle.color)
-    g.circle("fill", circle.x, circle.y, circle.radius)
-  end
+  circles:draw(g)
   
   g.setColor(global.defaultColor)
   g.setFont(global.titleFont)
@@ -44,19 +40,7 @@ function M:draw(g)
 end
 
 function M:update(dt)
-  if math.random() < 0.02 then
-    local circle = {
-      x = math.random(self.winWidth),
-      color = { 240 / 255, 145 / 255, 15 / 255, math.random() * 0.8 },
-      radius = math.random(self.winHeight / 8)
-    }
-    circle.y = self.winHeight + circle.radius
-    self.circles[#self.circles + 1] = circle
-  end
-  
-  for _, circle in ipairs(self.circles) do
-    circle.y = circle.y - dt * 50 * circle.color[4]
-  end
+  circles:update(dt)
 end
 
 main = M
