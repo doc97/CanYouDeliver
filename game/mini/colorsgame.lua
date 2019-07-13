@@ -1,4 +1,5 @@
-local Menu = require("lib.menu")
+local menuSelectGame = require "game.menu.selectgame"
+local Menu = require "lib.menu"
 local M = {
   colors = {
     red = { 1, 0, 0 },
@@ -10,6 +11,7 @@ local M = {
     grey = { 105/255, 105/255, 105/255 }
   },
   colorNames = { "red", "green", "blue", "orange", "purple", "yellow", "grey" },
+  keys = { "h", "j", "k", "l" },
 }
 
 function M:new()
@@ -21,20 +23,26 @@ function M:new()
   base.__index = base
  
   -- Flash the color | SHOW
-  local randomColorIndex = math.random(#M.colorNames)
-  local randomColorKey = M.colorNames[randomColorIndex]
-  o.winningText = M.colorNames[math.random(#M.colorNames)]
-  o.winningColor = M.colors[randomColorKey]
+  local winningTextColorIndex = math.random(#M.colorNames)
+  o.winningText = M.colorNames[winningTextColorIndex]
+  o.winningColorName = M.colorNames[math.random(#M.colorNames)]
 
-  local shitColors = table.clone(colorNames)
-  table.remove(shitColors, randomColorIndex)
-  
-  o.bastardColors = []
+  local shitColors = table.clone(M.colorNames)
+  table.remove(shitColors, winningTextColorIndex)
 
+  o.allColors = {}
   for i=1, 3 do 
     removedColor = table.remove(shitColors, math.random(#shitColors))
-    table.insert(o.bastardColors, -1, removedColor)
+    table.insert(o.allColors, 1, removedColor)
   end 
+
+  -- allColors has 3 colors for the other circles
+  -- add the winning one into allColors
+  o.correctKeyIndex = math.random(4)
+  table.insert(o.allColors, o.correctKeyIndex, o.winningText)
+  print("After:")
+  for i, color in ipairs(o.allColors) do print("  " .. color) end
+
   -- Timer
   o.winWidth, o.winHeight = love.window.getMode()
   o.lineX1 = o.winWidth / 2 - 50
@@ -58,11 +66,9 @@ function M:new()
   o.betMenu.gui:setAlign("center", "center")
 
   -- gui properties
-  local winWidth, winHeight = love.window.getMode()
-  o.gui:setPos(winWidth / 2, winHeight / 2 + 50)
+  o.gui:setPos(o.winWidth / 2, o.winHeight / 2 + 50)
   o.gui:setSize(global.font:getWidth(" [ ] Orange"), global.font:getHeight())
   o.gui:setAlign("center", "center")
-
 
   -- title
   -- o.title = "Select the color the text names: "
@@ -70,32 +76,51 @@ function M:new()
 
   -- States: show, bet
   o.state = "show"
-
   return o
 end
 
 -- Quick and dirty hack
 function table.clone(org) 
-  return {table.unpack(org)}
+  return {unpack(org)}
+end
+
+function M:keypressed(key, scancode, isrepeat)
+  if key == M.keys[self.correctKeyIndex] then
+    print "Success!"
+  else
+    print "FAIL!"
+  end
 end
 
 function M:draw(g)
   if self.state == "show" then
     g.setFont(global.titleFont)
-    g.setColor(self.randomColor)
-    g.printf(self.randomText, 0, self.winHeight / 2 - 100, self.winWidth, "center")
+    g.setColor(M.colors[self.winningColorName])
+    g.printf(self.winningText, 0, self.winHeight / 2 - 200, self.winWidth, "center")
+    g.setFont(global.font)
+    for i, colorName in ipairs(self.allColors) do
+      local cx = i * self.winWidth / 5
+      local cy = self.winHeight / 2 + 100
+      local char = M.keys[i]
+
+      g.setColor(M.colors[colorName])
+      g.circle("fill", cx, cy, 50)
+      g.setColor(0, 0, 0)
+      g.printf(char, cx - 50, cy - global.font:getHeight() / 2, 100, "center")
+    end
   elseif self.state == "bet" then
     g.setFont(global.font)
     g.printf(self.betQuestion, 0, self.winHeight / 2 - 100, self.winWidth, "center")
     self.betMenu.gui:draw(g)
   end
 end
+
 -- TODO Change 
 function M:update(dt)
   if self.state == "show" then 
     self.lineX2 = math.max(self.lineX1, self.lineX2 - (50 * dt))
     if self.lineX2 == self.lineX1 then 
-      self.state = "ask"
+      state.view = menuSelectGame:new()
     end
   end
 end
