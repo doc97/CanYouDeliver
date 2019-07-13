@@ -17,6 +17,8 @@ function love.load()
   global.titleFont = love.graphics.newFont("assets/fonts/RobotoMono-Regular.ttf", 64)
   global.font = love.graphics.newFont("assets/fonts/RobotoMono-Regular.ttf", 36)
   
+  global.defaultColor = { 120 / 255, 120 / 255, 120 / 255 }
+  
   -- Setup window
   love.window.setMode(1920, 1080, { fullscreen = true })
   
@@ -29,7 +31,7 @@ end
 
 function love.draw()
   love.graphics.clear(253 / 255, 246 / 255, 228 / 255)
-  love.graphics.setColor(150 / 255, 150 / 255, 150 / 255)
+  love.graphics.setColor(global.defaultColor)
   state.view:draw(love.graphics)
 end
 
