@@ -68,8 +68,6 @@ function M:keypressed(key, scancode, isrepeat)
         state.view = menuSelectGame:new()
       end
     end
-  elseif self.state == "bet" then
-    self.betMenu:keypressed(key, scancode, isrepeat)
   end
 end
 
