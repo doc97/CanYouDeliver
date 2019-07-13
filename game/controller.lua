@@ -1,16 +1,12 @@
 local state = require "game.state"
 local menuMain = require "game.menu.main"
-local menuSelectGame = require "game.menu.selectgame"
 
 local M = { func = {} }
-local minigames = {
-  memnumgame = require "game.mini.memnumgame",
-  colorsgame = require "game.mini.colorsgame",
-}
 
 function M.func.main(subType, data, state)
   if subType == "newgame" then
-    state.view = menuSelectGame:new()
+    state:reset()
+    state:nextGame()
   elseif subType == "quit" then
     love.event.quit()
   else
@@ -19,9 +15,9 @@ function M.func.main(subType, data, state)
   return true
 end
 
-function M.func.selectgame(subType, data, state)
+function M.func.nextgame(subType, data, state)
   if subType == "game" then
-    state.view = minigames[data.name]:new()
+    state:startGame(data.code)
   elseif subType == "exit" then
     state.view = menuMain:new()
   else
@@ -32,10 +28,10 @@ end
 
 function M.func.continue(subType, data, state)
   if subType == "yes" then
-    state.view = minigames[data.game]:new(data.data)
+    state:continueGame(data.data)
   elseif subType == "no" then
     state.points = state.points + data.points
-    state.view = menuSelectGame:new()
+    state:nextGame()
   else
     return false
   end

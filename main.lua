@@ -9,7 +9,7 @@ function love.load()
   -- Initialize random
   math.randomseed(os.time())
   math.random() math.random() math.random()
-    
+  
   -- Disable stdout buffering
   io.stdout:setvbuf("no")
   
@@ -25,7 +25,7 @@ function love.load()
   -- Register event handler
   event:subscribe(controller.handleEvent)
   
-  -- Start game
+  -- Initialize state
   state.view = menuMain:new()
 end
 

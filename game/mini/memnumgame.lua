@@ -1,4 +1,3 @@
-local menuSelectGame = require "game.menu.selectgame"
 local menuContinue = require "game.menu.continue"
 local Menu = require "lib.menu"
 local M = {}
@@ -62,10 +61,10 @@ function M:keypressed(key, scancode, isrepeat)
     elseif key == "return" then
       local num = tonumber(self.answer)
       if num == self.number then
-        state.view = menuContinue:new({ game = "memnumgame", data = { num = self.answer:len(), points = self.points + 100 } })
+        state:verifyContinuation({ num = self.answer:len(), points = self.points + 100 })
       else
         state.points = state.points + self.points
-        state.view = menuSelectGame:new()
+        state:nextGame()
       end
     end
   end
