@@ -40,8 +40,6 @@ function M:new()
   -- add the winning one into allColors
   o.correctKeyIndex = math.random(4)
   table.insert(o.allColors, o.correctKeyIndex, o.winningText)
-  print("After:")
-  for i, color in ipairs(o.allColors) do print("  " .. color) end
 
   -- Timer
   o.winWidth, o.winHeight = love.window.getMode()
