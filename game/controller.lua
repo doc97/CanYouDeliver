@@ -1,5 +1,4 @@
 local state = require "game.state"
-local formUsername = require "game.form.username"
 local menuMain = require "game.menu.main"
 local menuSelectGame = require "game.menu.selectgame"
 
@@ -11,25 +10,13 @@ local minigames = {
 
 function M.func.main(subType, data, state)
   if subType == "newgame" then
-    state.view = formUsername:new()
+    state.view = menuSelectGame:new()
   elseif subType == "quit" then
     love.event.quit()
   else
     return false
   end
   return true
-end
-
-function M.func.username(subType, data, state)
-  if subType == "submit" then
-    if data.username == "" then
-      state.view = menuMain:new()
-    else
-      state.view = menuSelectGame:new()
-    end
-    return true
-  end
-  return false
 end
 
 function M.func.selectgame(subType, data, state)
