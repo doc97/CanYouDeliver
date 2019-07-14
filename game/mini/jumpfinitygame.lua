@@ -29,7 +29,7 @@ local function updatePlayer(self, dt)
   self.player.y = self.player.y + self.player.dy * dt
   
   if isInAir(self) then
-    self.player.dy = self.player.dy + 25 -- gravity
+    self.player.dy = self.player.dy + 25 * 60 * dt -- gravity
   end
 end
 
@@ -126,6 +126,7 @@ function M:update(dt)
   updatePlayer(self, dt)
   checkCollision(self)
   updateLevelTimer(self, dt)
+  print(love.timer.getFPS())
 end
 
 function M:keypressed(key, scancode, isrepeat)
