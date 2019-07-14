@@ -15,8 +15,13 @@ After each round in the three different mini-games you are awarded some points a
 ### Color Recognition
 ![Color Picture](clr.jpg)
 
+## Made for
+Summer Game Jam 2019
+
 ## Made with
 * Lua
 * Löve
 
 ## Made by
+* [Daniel Riissanen](github.com/doc97)
+* [Oskari Sieranen](github.com/oskarits)
