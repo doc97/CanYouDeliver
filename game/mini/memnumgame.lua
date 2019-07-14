@@ -63,7 +63,6 @@ function M:keypressed(key, scancode, isrepeat)
       if num == self.number then
         state:verifyContinuation({ num = self.answer:len(), points = self.points + 100 })
       else
-        state.points = state.points + self.points
         state:nextGame()
       end
     end
