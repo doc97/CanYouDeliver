@@ -19,9 +19,12 @@ function love.load()
   global.font = love.graphics.newFont("assets/fonts/RobotoMono-Regular.ttf", 36)
   
   -- Load music
-  global.bgm = love.audio.newSource("assets/music/TheDeadVineyard.mp3", "stream")
-  global.bgm:setLooping(true)
-  global.bgm:play()
+  local ok, res = pcall(love.audio.newSource, "assets/music/TheDeadVineyard.mp3", "stream")
+  if ok then
+    global.bgm = res
+    global.bgm:setLooping(true)
+    global.bgm:play()
+  end
   
   global.defaultColor = { 120 / 255, 120 / 255, 120 / 255 }
   global.accentColor = { 240 / 255, 145 / 255, 15 / 255 }
