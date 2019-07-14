@@ -1,3 +1,4 @@
+local circleGfx = require "game.gfx.circles"
 local menuContinue = require "game.menu.continue"
 local M = {}
 
@@ -10,13 +11,20 @@ local function spawnObstacles(self, dt)
       x = self.winWidth,
       y = self.winHeight - 30
     }
+    if math.random() < 0.2 then
+      self.obstacles[#self.obstacles + 1] = {
+        x = self.winWidth + 100,
+        y = self.winHeight - 30
+      }
+    end
     self.timer = 0
+    self.spawnTime = self.baseSpawnTime * (math.random() * 0.5 + 1)
   end
 end
 
 local function updateObstacles(self, dt)
   for _, o in ipairs(self.obstacles) do
-    o.x = o.x - dt * (500 + self.level * 100) -- px / sec
+    o.x = o.x - dt * (500 + self.level * 50) -- px / sec
   end
 end
 
@@ -34,7 +42,7 @@ local function updatePlayer(self, dt)
 end
 
 local function checkCollision(self)
-  -- First discard impossible obstacles
+  -- First discard impossible obstaclesh
   local possible = {}
   for _, o in ipairs(self.obstacles) do
     local distSqrd = (o.x - self.player.x) ^ 2 + (o.y - self.player.y) ^ 2
@@ -99,8 +107,8 @@ function M:new(data)
   
   o.obstacles = {}
   o.timer = 0 
-  o.spawnTime = 3 - math.sqrt(data.level) * 0.75
-  
+  o.baseSpawnTime = 3 - math.sqrt(data.level) * 1
+  o.spawnTime = o.baseSpawnTime
   
   o.levelTimer = 20 
   o.level = data.level
@@ -110,24 +118,25 @@ function M:new(data)
 end
 
 function M:draw(g)
+  circleGfx:draw(g, { 120 / 255, 170 / 255, 245 / 255 })
   g.setColor(global.defaultColor)
   local tr = self.triangleShape
   for _, o in ipairs(self.obstacles) do
     g.polygon("fill", o.x + tr.x1, o.y + tr.y1, o.x + tr.x2, o.y + tr.y2, o.x + tr.x3, o.y + tr.y3)
   end
-  --g.setColor(14 / 255, 108 / 255, 239 / 255)
+  
   g.rectangle("fill", 0, self.winHeight - 30, self.winWidth, 15)
   g.setColor(global.accentColor)
   g.rectangle("fill", self.player.x, self.player.y, self.player.s, self.player.s)
 end
 
 function M:update(dt)
+  circleGfx:update(dt)
   spawnObstacles(self, dt)
   updateObstacles(self, dt)
   updatePlayer(self, dt)
   checkCollision(self)
   updateLevelTimer(self, dt)
-  print(love.timer.getFPS())
 end
 
 function M:keypressed(key, scancode, isrepeat)

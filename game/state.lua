@@ -6,8 +6,8 @@ local menuMain = require "game.menu.main"
 local M = { view = {}, points = 0, collectedPoints = 0, nextGameIdx = 0,
   gameCodes = {
     "jumpfinitygame",
-    "memnumgame",
-    "colorsgame",
+    --"memnumgame",
+    --"colorsgame",
   },
   games = {
     jumpfinitygame = { name = "Jump Finity", view = require "game.mini.jumpfinitygame" },
