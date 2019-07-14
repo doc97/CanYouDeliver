@@ -75,6 +75,9 @@ function M:draw(g)
   g.setColor(M.colors[self.winningColorName])
   g.printf(self.winningText, 0, self.winHeight / 2 - 200, self.winWidth, "center")
   g.setFont(global.font)
+  g.setLineWidth(5)
+  g.setColor(global.defaultColor)
+  g.line(self.lineX1, self.lineY, self.lineX2, self.lineY)
   for i, colorName in ipairs(self.allColors) do
     local cx = i * self.winWidth / 5
     local cy = self.winHeight / 2 + 100
