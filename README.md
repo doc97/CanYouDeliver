@@ -23,5 +23,5 @@ Summer Game Jam 2019
 * Löve
 
 ## Made by
-* [Daniel Riissanen](github.com/doc97)
-* [Oskari Sieranen](github.com/oskarits)
+* [Daniel Riissanen](https://www.github.com/doc97)
+* [Oskari Sieranen](https://www.github.com/oskarits)
