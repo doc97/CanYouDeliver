@@ -37,6 +37,7 @@ function M:draw(g)
   g.print(self.title, self.titleX, 200)
   g.setFont(global.font)
   self.gui:draw(g)
+  g.printf("Made by\nOskari Sieranen\nDaniel Riissanen", 0, self.winHeight - 200, self.winWidth - 50, "right")
 end
 
 function M:update(dt)
