@@ -16,7 +16,7 @@ end
 
 local function updateObstacles(self, dt)
   for _, o in ipairs(self.obstacles) do
-    o.x = o.x - dt * 250 -- px / sec
+    o.x = o.x - dt * (500 + self.level * 100) -- px / sec
   end
 end
 
@@ -98,10 +98,11 @@ function M:new(data)
   }
   
   o.obstacles = {}
-  o.timer = 0
-  o.spawnTime = 3
+  o.timer = 0 
+  o.spawnTime = 3 - math.sqrt(data.level) * 0.75
   
-  o.levelTimer = 20
+  
+  o.levelTimer = 20 
   o.level = data.level
   o.points = data.points
   
