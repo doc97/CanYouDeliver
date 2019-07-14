@@ -12,9 +12,10 @@ function M:update(dt)
     local winWidth, winHeight = love.window.getMode()
     local circle = {
       x = math.random(winWidth),
-      color = { 240 / 255, 145 / 255, 15 / 255, math.random() * 0.8 },
+      color = { unpack(global.accentColor) },
       radius = math.random(winHeight / 8)
     }
+    circle.color[4] = math.random() * 0.8
     circle.y = winHeight + circle.radius
     self.circles[#self.circles + 1] = circle
   end

@@ -24,6 +24,7 @@ function love.load()
   global.bgm:play()
   
   global.defaultColor = { 120 / 255, 120 / 255, 120 / 255 }
+  global.accentColor = { 240 / 255, 145 / 255, 15 / 255 }
   
   -- Setup window
   love.window.setMode(1920, 1080, { fullscreen = true })
