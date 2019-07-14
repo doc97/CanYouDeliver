@@ -6,7 +6,7 @@ After each round in the three different mini-games you are awarded some points a
 
 ## Games
 ### Jump Finity
-![Jump Picture](jmp.png)
+![Jump Picture](jmp.jpg)
 
 ### Number Memory
 ![Number Picture 1](num1.jpg)
